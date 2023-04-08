@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1035113159543",
+    "project_id": "mtcampaign-ee63f",
+    "storage_bucket": "mtcampaign-ee63f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035113159543:android:7d6da8edf9c3df067a9f72",
+        "android_client_info": {
+          "package_name": "com.mtcampaign.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035113159543-8r1bl08u5523cc47je4l8fodl7d57t9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8bDJDgF0sgjbNcOSV0cGFyPzZOmsGyI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035113159543-8r1bl08u5523cc47je4l8fodl7d57t9f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
