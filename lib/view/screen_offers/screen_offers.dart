@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/constants.dart';
+import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenOffers extends StatelessWidget {
   const ScreenOffers({super.key});
@@ -19,183 +20,225 @@ class ScreenOffers extends StatelessWidget {
     var mheight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Center(
-          child: Obx(
-            () => offers.isLoading.isTrue
-                ? const CircularProgressIndicator()
-                : Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: const [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "OFFERS",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                              color: Colors.black,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          offers.getData();
+        },
+        child: SingleChildScrollView(
+          child: SafeArea(
+              child: Center(
+            child: Obx(
+              () => offers.isLoading.isTrue
+                  ? Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: const [
+                            SizedBox(
+                              width: 20,
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: mwidth * 0.9,
-                        height: 1,
-                        color: Colors.black,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, i) {
-                          var offer = offers.offersList[i];
-                          return InkWell(
-                            onTap: () => {
-                              buildBottomSheet(context, offer, mwidth),
-                              intAd.showInterstitialAd(),
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Container(
-                                  height: 70,
-                                  width: mwidth * 0.95,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                          image: NetworkImage("${offer.image}"),
-                                          fit: BoxFit.cover,
-                                        )),
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 22,
-                                            width: 110,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.black),
-                                                borderRadius:
-                                                    BorderRadius.circular(50)),
-                                            child: Row(
-                                              children: [
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                  "${offer.name}",
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    fontWeight: FontWeight.bold,
+                            Text(
+                              "OFFERS",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          width: mwidth * 0.9,
+                          height: 1,
+                          color: Colors.black,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ShimmerLoadingWidget(),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: const [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              "OFFERS",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          width: mwidth * 0.9,
+                          height: 1,
+                          color: Colors.black,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, i) {
+                            var offer = offers.offersList[i];
+                            return InkWell(
+                              onTap: () => {
+                                buildBottomSheet(context, offer, mwidth),
+                                intAd.showInterstitialAd(),
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Container(
+                                    height: 70,
+                                    width: mwidth * 0.95,
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 70,
+                                          width: 70,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                            image:
+                                                NetworkImage("${offer.image}"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                        ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 22,
+                                              width: 110,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.black),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50)),
+                                              child: Row(
+                                                children: [
+                                                  const SizedBox(
+                                                    width: 5,
                                                   ),
-                                                ),
-                                                const Spacer(),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 12,
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          const Text(
-                                            "Try the app to get reward",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "₹${offer.amount}",
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: 20,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                                color: Colors.blue,
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: const Text(
-                                              "Try Now",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
+                                                  Text(
+                                                    "${offer.name}",
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  const Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    size: 12,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  )
+                                                ],
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      )
-                                    ],
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            const Text(
+                                              "Try the app to get reward",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                overflow: TextOverflow.ellipsis,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "₹${offer.amount}",
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              height: 20,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.blue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: const Text(
+                                                "Try Now",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 15,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, i) => const SizedBox(
-                          height: 10,
-                        ),
-                        itemCount: offers.offersList.length,
-                      )
-                    ],
-                  ),
-          ),
-        )),
+                            );
+                          },
+                          separatorBuilder: (context, i) => const SizedBox(
+                            height: 10,
+                          ),
+                          itemCount: offers.offersList.length,
+                        )
+                      ],
+                    ),
+            ),
+          )),
+        ),
       ),
     );
   }
@@ -248,58 +291,72 @@ class ScreenOffers extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                    elevation: 4,
-                    child: Container(
-                      width: mwidth * 0.9,
-                      height: 75,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
+                  Container(
+                    height: 60,
+                    width: mwidth * 0.95,
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage("${offer.image}"),
+                                fit: BoxFit.cover,
+                              )),
                         ),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage("${offer.image}"))),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "${offer.name}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${offer.name}",
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            "₹${offer.amount}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                            const SizedBox(
+                              height: 4,
                             ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      ),
+                            const Text(
+                              "Try the app to get reward",
+                              style: TextStyle(
+                                fontSize: 12,
+                                overflow: TextOverflow.ellipsis,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "₹${offer.amount}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(

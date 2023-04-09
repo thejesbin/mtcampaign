@@ -50,6 +50,7 @@ dependencies:
   onesignal_flutter: ^3.5.0
   google_mobile_ads: ^2.3.0
   marquee: ^2.2.3
+  shimmer: ^2.0.0
 
 
 dev_dependencies:

@@ -33,7 +33,7 @@ class ScreenProfile extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Jesbin",
+                     "${user.userList[0].user![0].name}",
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 23,

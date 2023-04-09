@@ -18,6 +18,7 @@ import 'package:mtcampaign/view/widgets/navigation_drawer_widget.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../controller/banner_ad_controller.dart';
+import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenMain extends StatefulWidget {
   const ScreenMain({super.key});
@@ -31,7 +32,7 @@ class _ScreenMainState extends State<ScreenMain> {
   Widget build(BuildContext context) {
     var bannerAd = Get.put(BannerAdController());
     Get.put(BannersController());
-    Get.put(UserController());
+    var users = Get.put(UserController());
     Get.put(OfferHistoryController());
     Get.put(OffersController());
     Get.put(WithdrawHistoryController());
@@ -51,10 +52,43 @@ class _ScreenMainState extends State<ScreenMain> {
         title: const Text(appName),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        elevation: 0,
+        elevation: 5,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: SizedBox(
+                child: Obx(() => users.isLoading.isTrue
+                    ? SizedBox(
+                        height: 1,
+                      )
+                    : Container(
+                        height: 15,
+                        alignment: Alignment.center,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          "₹${users.userList[0].user![0].balance}",
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
+                        ),
+                      ))),
+          )
+        ],
       ),
       backgroundColor: Colors.white,
-      body: pages[bottomIndex],
+      body: Obx(() => users.isLoading.isTrue
+          ? Column(
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                ShimmerLoadingWidget(),
+              ],
+            )
+          : pages[bottomIndex]),
       persistentFooterButtons: [
         Obx(() => bannerAd.isLoaded.isTrue
             ? SizedBox(

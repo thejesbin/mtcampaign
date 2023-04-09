@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../controller/banners_controller.dart';
 import '../../core/constants.dart';
 import '../../models/offers_model.dart';
+import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -29,136 +30,124 @@ class ScreenHome extends StatelessWidget {
     var mheight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Center(
-          child: Column(
-            children: [
-              Obx(
-                () => bannerController.isLoading.isTrue
-                    ? LinearProgressIndicator()
-                    : bannerController.isEmpty.isTrue
-                        ? SizedBox(
-                            height: 1,
-                          )
-                        : SizedBox(
-                            width: double.infinity,
-                            height: 150,
-                            child: CarouselSlider.builder(
-                              itemCount: bannerController.bannersList.length,
-                              itemBuilder: (BuildContext context, int index,
-                                  int pageViewIndex) {
-                                final banners =
-                                    bannerController.bannersList[index];
-                                return InkWell(
-                                  onTap: () async {
-                                    final Url = Uri.parse("${banners.url}");
-                                    if (!await launchUrl(Url,
-                                        mode: LaunchMode.externalApplication)) {
-                                      throw 'Could not launch $Url';
-                                    }
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(0),
-                                        color: Colors.white,
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                "${banners.image}"),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                );
-                              },
-                              options: CarouselOptions(
-                                autoPlay: true,
-                                autoPlayInterval: const Duration(seconds: 2),
-                                aspectRatio: 2.5,
-                                enlargeCenterPage: true,
-                                scrollDirection: Axis.horizontal,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          offers.getData();
+          userController.getData();
+        },
+        child: SingleChildScrollView(
+          child: SafeArea(
+              child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Obx(
+                  () => bannerController.isLoading.isTrue
+                      ? LinearProgressIndicator()
+                      : bannerController.isEmpty.isTrue
+                          ? SizedBox(
+                              height: 1,
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 150,
+                              child: CarouselSlider.builder(
+                                itemCount: bannerController.bannersList.length,
+                                itemBuilder: (BuildContext context, int index,
+                                    int pageViewIndex) {
+                                  final banners =
+                                      bannerController.bannersList[index];
+                                  return InkWell(
+                                    onTap: () async {
+                                      final Url = Uri.parse("${banners.url}");
+                                      if (!await launchUrl(Url,
+                                          mode:
+                                              LaunchMode.externalApplication)) {
+                                        throw 'Could not launch $Url';
+                                      }
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  "${banners.image}"),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                  );
+                                },
+                                options: CarouselOptions(
+                                  autoPlay: true,
+                                  autoPlayInterval: const Duration(seconds: 2),
+                                  aspectRatio: 2.5,
+                                  enlargeCenterPage: true,
+                                  scrollDirection: Axis.horizontal,
+                                ),
                               ),
                             ),
-                          ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Obx(
-                () => offers.isLoading.isTrue
-                    ? SizedBox(
-                        height: 1,
-                      )
-                    : ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, i) {
-                          var offer = offers.offersList[i];
-                          return InkWell(
-                            onTap: () {
-                              intAd.showInterstitialAd();
-                              buildBottomSheet(context, offer, mwidth);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Obx(
+                  () => offers.isLoading.isTrue
+                      ? ShimmerLoadingWidget()
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, i) {
+                            var offer = offers.offersList[i];
+                            return InkWell(
+                              onTap: () {
+                                intAd.showInterstitialAd();
+                                buildBottomSheet(context, offer, mwidth);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  height: 70,
+                                  height: 60,
                                   width: mwidth * 0.95,
                                   alignment: Alignment.center,
                                   child: Row(
                                     children: [
                                       Container(
-                                        height: 70,
-                                        width: 70,
+                                        height: 50,
+                                        width: 50,
                                         decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             image: DecorationImage(
-                                          image: NetworkImage("${offer.image}"),
-                                          fit: BoxFit.cover,
-                                        )),
+                                              image: NetworkImage(
+                                                  "${offer.image}"),
+                                              fit: BoxFit.cover,
+                                            )),
                                       ),
                                       const SizedBox(
-                                        width: 15,
+                                        width: 10,
                                       ),
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Container(
-                                            height: 22,
-                                            width: 110,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.black),
-                                                borderRadius:
-                                                    BorderRadius.circular(50)),
-                                            child: Row(
-                                              children: [
-                                                const SizedBox(
-                                                  width: 5,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${offer.name}",
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                Text(
-                                                  "${offer.name}",
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 12,
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                )
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                           const SizedBox(
                                             height: 4,
@@ -168,7 +157,7 @@ class ScreenHome extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 12,
                                               overflow: TextOverflow.ellipsis,
-                                              color: Colors.black,
+                                              color: Colors.grey,
                                             ),
                                           ),
                                         ],
@@ -181,29 +170,9 @@ class ScreenHome extends StatelessWidget {
                                           Text(
                                             "₹${offer.amount}",
                                             style: const TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.green,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: 20,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                                color: Colors.blue,
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: const Text(
-                                              "Try Now",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
                                             ),
                                           ),
                                         ],
@@ -215,70 +184,70 @@ class ScreenHome extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, i) => const SizedBox(
-                          height: 10,
+                            );
+                          },
+                          separatorBuilder: (context, i) => Divider(
+                            thickness: 1,
+                          ),
+                          itemCount: offers.offersList.length,
                         ),
-                        itemCount: offers.offersList.length,
-                      ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Obx(() => userController.isLoading.isTrue
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : userController.isEmpty.isTrue
-                      ? SizedBox(
-                          height: 1,
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            HomeCardWidget(
-                              amount:
-                                  "${userController.userList[0].user![0].balance}",
-                              title: "Total Balance",
-                              icon: Icons.account_balance_outlined,
-                              color: Colors.orange,
-                            ),
-                            HomeCardWidget(
-                              amount:
-                                  "${double.parse(userController.userList[0].totalEarnings.toString()).toInt()}",
-                              title: "Total Earnings",
-                              icon: Icons.file_open_outlined,
-                              color: Colors.green,
-                            ),
-                          ],
-                        )),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  HomeCardWidget(
-                    amount:
-                        "${double.parse(userController.userList[0].totalReferEarnings.toString()).toInt()}",
-                    title: "Total Refer Earnings",
-                    icon: Icons.check_circle,
-                    color: Colors.red,
-                  ),
-                  HomeCardWidget(
-                    amount:
-                        "${double.parse(userController.userList[0].totalWithdrawal.toString()).toInt()}",
-                    title: "Total Withdrawal",
-                    icon: Icons.handshake_outlined,
-                    color: Colors.blue,
-                  ),
-                ],
-              )
-            ],
-          ),
-        )),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Obx(() => userController.isLoading.isTrue
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : userController.isEmpty.isTrue
+                        ? SizedBox(
+                            height: 1,
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              HomeCardWidget(
+                                amount:
+                                    "${userController.userList[0].user![0].balance}",
+                                title: "Total Balance",
+                                icon: Icons.account_balance_outlined,
+                                color: Colors.orange,
+                              ),
+                              HomeCardWidget(
+                                amount:
+                                    "${double.parse(userController.userList[0].totalEarnings.toString()).toInt()}",
+                                title: "Total Earnings",
+                                icon: Icons.file_open_outlined,
+                                color: Colors.green,
+                              ),
+                            ],
+                          )),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    HomeCardWidget(
+                      amount:
+                          "${double.parse(userController.userList[0].totalReferEarnings.toString()).toInt()}",
+                      title: "Total Refer Earnings",
+                      icon: Icons.check_circle,
+                      color: Colors.red,
+                    ),
+                    HomeCardWidget(
+                      amount:
+                          "${double.parse(userController.userList[0].totalWithdrawal.toString()).toInt()}",
+                      title: "Total Withdrawal",
+                      icon: Icons.handshake_outlined,
+                      color: Colors.blue,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )),
+        ),
       ),
     );
   }
@@ -331,58 +300,72 @@ class ScreenHome extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                    elevation: 4,
-                    child: Container(
-                      width: mwidth * 0.9,
-                      height: 75,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
+                  Container(
+                    height: 60,
+                    width: mwidth * 0.95,
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage("${offer.image}"),
+                                fit: BoxFit.cover,
+                              )),
                         ),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage("${offer.image}"))),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "${offer.name}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${offer.name}",
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            "₹${offer.amount}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                            const SizedBox(
+                              height: 4,
                             ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      ),
+                            const Text(
+                              "Try the app to get reward",
+                              style: TextStyle(
+                                fontSize: 12,
+                                overflow: TextOverflow.ellipsis,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "₹${offer.amount}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(
