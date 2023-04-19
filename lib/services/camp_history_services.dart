@@ -2,28 +2,29 @@ import 'package:dio/dio.dart';
 import 'package:mtcampaign/core/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/offer_history_model.dart';
+import '../models/camp_history_model.dart';
 
-class OfferHistoryServices {
-  Future<List<OfferHistoryModel>?> getOfferHistory() async {
+class CampHistoryServices {
+  Future<List<CampHistoryModel>?> getCampHistory() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var uid = sharedPreferences.getString('uid');
 
     var formData = FormData.fromMap({'uid': uid});
     final Response response = await Dio().post(
-      campHistoryUrl,
+      offerHistoryUrl,
       data: formData,
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.data['result']);
       if (response.data['result'] == null) {
         return null;
       } else {
-        final offerHistoryList = (response.data['result'] as List).map((e) {
-          return OfferHistoryModel.fromJson(e);
+        final campHistoryList = (response.data['result'] as List).map((e) {
+          return CampHistoryModel.fromJson(e);
         }).toList();
 
-        return offerHistoryList;
+        return campHistoryList;
       }
     } else {
       return null;

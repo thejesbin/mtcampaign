@@ -33,6 +33,17 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9755853476507725~8318741089"/>
+        <meta-data
+            android:name="com.startapp.sdk.APPLICATION_ID"
+            android:value="203919412" />
+        <provider
+            android:authorities="com.startapp.flutter.sdk.${applicationId}"
+            android:name="com.startapp.flutter.sdk.StartAppFlutterHelper"
+            android:exported="false">
+                <meta-data
+                    android:name="com.startapp.sdk.SPLASH_ADS_ENABLED"
+                    android:value="false" />
+        </provider>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

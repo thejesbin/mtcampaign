@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mtcampaign/controller/banner_ad_controller.dart';
 import 'package:mtcampaign/controller/interstitial_ad_controller.dart';
 import 'package:mtcampaign/controller/settings_controller.dart';
+import 'package:mtcampaign/controller/start_ad_controller.dart';
 import 'package:mtcampaign/view/screen_login/screen_login.dart';
 import 'package:mtcampaign/view/screen_main/screen_main.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -46,6 +47,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         Get.put(MyReferralsController());
         Get.put(BannerAdController());
         Get.put(InterStitialAdController());
+        Get.put(StartAdController());
       }
       Timer(Duration(milliseconds: 1500), () async {
         print(uid);

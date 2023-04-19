@@ -18,6 +18,7 @@ import 'package:mtcampaign/view/widgets/navigation_drawer_widget.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../controller/banner_ad_controller.dart';
+import '../../controller/camp_history_controller.dart';
 import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenMain extends StatefulWidget {
@@ -38,6 +39,7 @@ class _ScreenMainState extends State<ScreenMain> {
     Get.put(WithdrawHistoryController());
     Get.put(MyReferralsController());
     Get.put(TransactionsController());
+    Get.put(CampHistoryController());
 
     var pages = [
       ScreenHome(),

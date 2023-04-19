@@ -7,6 +7,8 @@ class OffersModel {
   String? image;
   String? offerid;
   String? steps;
+  String? about;
+  String? banner;
 
 //create constructor
   OffersModel({
@@ -17,6 +19,8 @@ class OffersModel {
     this.image,
     this.steps,
     this.name,
+    this.about,
+    this.banner,
   });
 
   //fromJson method
@@ -29,6 +33,8 @@ class OffersModel {
       steps: json['steps'],
       offerid: json['offer_id'],
       amount: json['amount'],
+      about: json['about'],
+      banner: json['banner'],
     );
   }
 
@@ -42,6 +48,8 @@ class OffersModel {
       "steps": steps,
       "offer_id": offerid,
       "amount": amount,
+      "about": about,
+      "banner": banner,
     };
   }
 }

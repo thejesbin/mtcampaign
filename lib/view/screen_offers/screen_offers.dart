@@ -5,8 +5,12 @@ import 'package:mtcampaign/controller/offers_controller.dart';
 import 'package:mtcampaign/models/offers_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:startapp_sdk/startapp.dart';
+import '../../controller/camp_history_controller.dart';
+import '../../controller/offer_history_controller.dart';
+import '../../controller/start_ad_controller.dart';
 import '../../core/constants.dart';
+import '../screen_offer_details/screen_offer_details.dart';
 import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenOffers extends StatelessWidget {
@@ -15,231 +19,286 @@ class ScreenOffers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var offers = Get.put(OffersController());
+    var history = Get.put(CampHistoryController());
+    var startAd = Get.put(StartAdController());
     var intAd = Get.put(InterStitialAdController());
     var mwidth = MediaQuery.of(context).size.width;
     var mheight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: RefreshIndicator(
-        onRefresh: () async {
-          offers.getData();
-        },
-        child: SingleChildScrollView(
-          child: SafeArea(
-              child: Center(
-            child: Obx(
-              () => offers.isLoading.isTrue
-                  ? Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: const [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "OFFERS",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          width: mwidth * 0.9,
-                          height: 1,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ShimmerLoadingWidget(),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: const [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "OFFERS",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          width: mwidth * 0.9,
-                          height: 1,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, i) {
-                            var offer = offers.offersList[i];
-                            return InkWell(
-                              onTap: () => {
-                                buildBottomSheet(context, offer, mwidth),
-                                intAd.showInterstitialAd(),
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Container(
-                                    height: 70,
-                                    width: mwidth * 0.95,
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: 70,
-                                          width: 70,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                            image:
-                                                NetworkImage("${offer.image}"),
-                                            fit: BoxFit.cover,
-                                          )),
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              height: 22,
-                                              width: 110,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.black),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50)),
-                                              child: Row(
-                                                children: [
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    "${offer.name}",
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  const Spacer(),
-                                                  const Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    size: 12,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            const Text(
-                                              "Try the app to get reward",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "₹${offer.amount}",
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Container(
-                                              alignment: Alignment.center,
-                                              height: 20,
-                                              width: 70,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.blue,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              child: const Text(
-                                                "Try Now",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, i) => const SizedBox(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            offers.getData();
+          },
+          child: SingleChildScrollView(
+            child: SafeArea(
+                child: Center(
+              child: Obx(
+                () => offers.isLoading.isTrue
+                    ? Column(
+                        children: [
+                          const SizedBox(
                             height: 10,
                           ),
-                          itemCount: offers.offersList.length,
-                        )
-                      ],
-                    ),
-            ),
-          )),
+                          Row(
+                            children: const [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                "OFFERS",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: mwidth * 0.9,
+                            height: 1,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ShimmerLoadingWidget(),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          startAd.mrecAd != null
+                              ? StartAppBanner(startAd.mrecAd!)
+                              : SizedBox(height: 1),
+                          TabBar(
+                              labelColor: Colors.black,
+                              indicatorColor: Colors.blue,
+                              tabs: [
+                                Tab(
+                                  text: "Offers",
+                                ),
+                                Tab(
+                                  text: "History",
+                                )
+                              ]),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            child: TabBarView(children: [
+                              offersList(offers, intAd, mwidth),
+                              historyList(history, intAd, mwidth)
+                            ]),
+                          )
+                        ],
+                      ),
+              ),
+            )),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget historyList(CampHistoryController campHistory,
+      InterStitialAdController intAd, double mwidth) {
+    return ListView.separated(
+      itemBuilder: (context, i) {
+        var history = campHistory.campHistoryList[i];
+        return Container(
+          height: 50,
+          width: mwidth,
+          alignment: Alignment.center,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(history.image.toString()),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                history.title.toString(),
+                style: const TextStyle(
+                  fontSize: 14,
+                  overflow: TextOverflow.ellipsis,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Spacer(),
+              Container(
+                height: 15,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: history.status == "success"
+                      ? Colors.green
+                      : history.status == "pending"
+                          ? Colors.yellow
+                          : Colors.red,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  history.status.toString(),
+                  style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        );
+      },
+      separatorBuilder: (context, i) => const Divider(
+        thickness: 1,
+      ),
+      itemCount: campHistory.campHistoryList.length,
+    );
+  }
+
+  Widget offersList(
+      OffersController offers, InterStitialAdController intAd, double mwidth) {
+    return ListView.separated(
+      itemBuilder: (context, i) {
+        var offer = offers.offersList[i];
+        return InkWell(
+          onTap: () => {
+            intAd.showInterstitialAd(),
+            Get.to(() => ScreenOfferDetails(
+                  offer: offer,
+                ))
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                height: 70,
+                width: mwidth * 0.95,
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: NetworkImage("${offer.image}"),
+                        fit: BoxFit.cover,
+                      )),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 22,
+                          width: 110,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "${offer.name}",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Spacer(),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        const Text(
+                          "Try the app to get reward",
+                          style: TextStyle(
+                            fontSize: 12,
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "₹${offer.amount}",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: 20,
+                          width: 70,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "Try Now",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (context, i) => const SizedBox(
+        height: 10,
+      ),
+      itemCount: offers.offersList.length,
     );
   }
 

@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 import 'package:mtcampaign/controller/banner_ad_controller.dart';
 import 'package:mtcampaign/controller/interstitial_ad_controller.dart';
 import 'package:mtcampaign/controller/offers_controller.dart';
+import 'package:mtcampaign/controller/start_ad_controller.dart';
 import 'package:mtcampaign/controller/user_controller.dart';
 import 'package:mtcampaign/view/widgets/home_card_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:startapp_sdk/startapp.dart';
 import '../../controller/banners_controller.dart';
 import '../../core/constants.dart';
 import '../../models/offers_model.dart';
+import '../screen_offer_details/screen_offer_details.dart';
 import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -25,6 +27,8 @@ class ScreenHome extends StatelessWidget {
     var offers = Get.put(OffersController());
     var userController = Get.put(UserController());
     var bannerAd = Get.put(BannerAdController());
+
+    var startAd = Get.put(StartAdController());
     var intAd = Get.put(InterStitialAdController());
     var mwidth = MediaQuery.of(context).size.width;
     var mheight = MediaQuery.of(context).size.height;
@@ -94,6 +98,9 @@ class ScreenHome extends StatelessWidget {
                 SizedBox(
                   height: 25,
                 ),
+                startAd.mrecAd != null
+                    ? StartAppBanner(startAd.mrecAd!)
+                    : SizedBox(height: 1),
                 Obx(
                   () => offers.isLoading.isTrue
                       ? ShimmerLoadingWidget()
@@ -105,90 +112,227 @@ class ScreenHome extends StatelessWidget {
                             return InkWell(
                               onTap: () {
                                 intAd.showInterstitialAd();
-                                buildBottomSheet(context, offer, mwidth);
+                                Get.to(() => ScreenOfferDetails(
+                                      offer: offer,
+                                    ));
                               },
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 60,
-                                  width: mwidth * 0.95,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  "${offer.image}"),
-                                              fit: BoxFit.cover,
-                                            )),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                      height: 240,
+                                      width: 300,
+                                      alignment: Alignment.topCenter,
+                                      child: Stack(
                                         children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                          Column(
                                             children: [
-                                              Text(
-                                                "${offer.name}",
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  fontWeight: FontWeight.bold,
+                                              Container(
+                                                height: 150,
+                                                width: double.infinity,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                  ),
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(offers
+                                                        .offersList[i].banner
+                                                        .toString()),
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
+                                              ),
+                                              const Spacer(),
+                                              Row(
+                                                children: [
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        offers
+                                                            .offersList[i].name
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontFamily: "Itim",
+                                                            fontSize: 18),
+                                                      ),
+                                                      Text(
+                                                        "Try the app to get reward",
+                                                        style: const TextStyle(
+                                                            fontFamily: "Itim",
+                                                            color: Colors.grey,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  Container(
+                                                    alignment: Alignment.center,
+                                                    height: 25,
+                                                    width: 85,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                    ),
+                                                    child: const Text(
+                                                      "Claim Now",
+                                                      style: TextStyle(
+                                                          fontFamily: "Itim",
+                                                          fontSize: 12,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          const Text(
-                                            "Try the app to get reward",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
+                                          Positioned(
+                                              bottom: 50,
+                                              left: 10,
+                                              child: Card(
+                                                elevation: 3,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                child: Container(
+                                                  height: 60,
+                                                  width: 60,
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: NetworkImage(
+                                                            offers.offersList[i]
+                                                                .image
+                                                                .toString()),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                ),
+                                              )),
+                                          Positioned(
+                                              bottom: 50,
+                                              right: 10,
+                                              child: Container(
+                                                height: 50,
+                                                width: 50,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50)),
+                                                child: Text(
+                                                  "₹${offers.offersList[i].amount}",
+                                                  style: const TextStyle(
+                                                      fontFamily: "Itim",
+                                                      color: Colors.white,
+                                                      fontSize: 16),
+                                                ),
+                                              ))
                                         ],
                                       ),
-                                      const Spacer(),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "₹${offer.amount}",
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      )
-                                    ],
+                                    ),
+                                  )
+                                  // Container(
+                                  //   height: 60,
+                                  //   width: mwidth * 0.95,
+                                  //   alignment: Alignment.center,
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Container(
+                                  //         height: 50,
+                                  //         width: 50,
+                                  //         decoration: BoxDecoration(
+                                  //             borderRadius:
+                                  //                 BorderRadius.circular(10),
+                                  //             image: DecorationImage(
+                                  //               image: NetworkImage(
+                                  //                   "${offer.image}"),
+                                  //               fit: BoxFit.cover,
+                                  //             )),
+                                  //       ),
+                                  //       const SizedBox(
+                                  //         width: 10,
+                                  //       ),
+                                  //       Column(
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.center,
+                                  //         children: [
+                                  //           Row(
+                                  //             crossAxisAlignment:
+                                  //                 CrossAxisAlignment.start,
+                                  //             children: [
+                                  //               Text(
+                                  //                 "${offer.name}",
+                                  //                 style: const TextStyle(
+                                  //                   fontSize: 14,
+                                  //                   overflow:
+                                  //                       TextOverflow.ellipsis,
+                                  //                   fontWeight: FontWeight.bold,
+                                  //                 ),
+                                  //               ),
+                                  //             ],
+                                  //           ),
+                                  //           const SizedBox(
+                                  //             height: 4,
+                                  //           ),
+                                  //           const Text(
+                                  //             "Try the app to get reward",
+                                  //             style: TextStyle(
+                                  //               fontSize: 12,
+                                  //               overflow: TextOverflow.ellipsis,
+                                  //               color: Colors.grey,
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //       const Spacer(),
+                                  //       Column(
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.center,
+                                  //         children: [
+                                  //           Text(
+                                  //             "₹${offer.amount}",
+                                  //             style: const TextStyle(
+                                  //               fontSize: 18,
+                                  //               fontWeight: FontWeight.bold,
+                                  //               color: Colors.green,
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //       const SizedBox(
+                                  //         width: 15,
+                                  //       )
+                                  //     ],
+                                  //   ),
+                                  // ),
                                   ),
-                                ),
-                              ),
                             );
                           },
-                          separatorBuilder: (context, i) => Divider(
-                            thickness: 1,
-                          ),
+                          separatorBuilder: (context, i) =>
+                              SizedBox(height: 10),
                           itemCount: offers.offersList.length,
                         ),
                 ),

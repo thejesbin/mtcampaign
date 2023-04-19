@@ -192,10 +192,7 @@ class ScreenWallet extends StatelessWidget {
                                     height: 70,
                                     width: mwidth * 0.9,
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        border:
-                                            Border.all(color: Colors.black)),
+                                    
                                     child: Row(
                                       children: [
                                         const SizedBox(
@@ -248,7 +245,7 @@ class ScreenWallet extends StatelessWidget {
                                           width: 15,
                                         ),
                                         Container(
-                                            height: 30,
+                                            height: 20,
                                             width: 65,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
@@ -265,6 +262,7 @@ class ScreenWallet extends StatelessWidget {
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
+                                                fontSize:10,
                                               ),
                                             )),
                                         const SizedBox(
@@ -276,9 +274,7 @@ class ScreenWallet extends StatelessWidget {
                                 );
                               },
                               separatorBuilder: (context, i) {
-                                return SizedBox(
-                                  height: 10,
-                                );
+                                return Divider(thickness:2);
                               },
                               itemCount:
                                   withdrawHistory.withdrawHistoryList.length),

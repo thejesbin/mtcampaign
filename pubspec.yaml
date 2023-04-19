@@ -51,6 +51,7 @@ dependencies:
   google_mobile_ads: ^2.3.0
   marquee: ^2.2.3
   shimmer: ^2.0.0
+  startapp_sdk: ^0.4.1
 
 
 dev_dependencies:
