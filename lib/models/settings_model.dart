@@ -8,6 +8,7 @@ class SettingsModel {
   String? maxWithdrawal;
   String? tgChannel;
   String? tgSupport;
+  String? refferOffers;
 
 //create constructor
   SettingsModel({
@@ -19,6 +20,7 @@ class SettingsModel {
     this.maxWithdrawal,
     this.tgChannel,
     this.tgSupport,
+    this.refferOffers,
   });
 
   //fromJson method
@@ -32,6 +34,7 @@ class SettingsModel {
       maxWithdrawal: json['max_withdrawal'],
       tgChannel: json['tg_channel'],
       tgSupport: json['tg_support'],
+      refferOffers: json['reffer_offers'],
     );
   }
 
@@ -46,6 +49,7 @@ class SettingsModel {
       "max_withdrawal": maxWithdrawal,
       "tg_channel": tgChannel,
       "tg_support": tgSupport,
+      "reffer_offers": refferOffers,
     };
   }
 }

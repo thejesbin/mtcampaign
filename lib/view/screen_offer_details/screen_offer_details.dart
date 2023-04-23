@@ -64,6 +64,7 @@ class ScreenOfferDetails extends StatelessWidget {
                               "${offer.name}",
                               style: const TextStyle(
                                 fontSize: 14,
+                                fontFamily: "Itim",
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -77,6 +78,7 @@ class ScreenOfferDetails extends StatelessWidget {
                           "Try the app to get reward",
                           style: TextStyle(
                             fontSize: 12,
+                            fontFamily: "Itim",
                             overflow: TextOverflow.ellipsis,
                             color: Colors.grey,
                           ),
@@ -91,6 +93,7 @@ class ScreenOfferDetails extends StatelessWidget {
                           "₹${offer.amount}",
                           style: const TextStyle(
                             fontSize: 18,
+                            fontFamily: "Itim",
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
                           ),
@@ -127,6 +130,7 @@ class ScreenOfferDetails extends StatelessWidget {
                           Text(
                             "About",
                             style: TextStyle(
+                              fontFamily: "Itim",
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -144,6 +148,7 @@ class ScreenOfferDetails extends StatelessWidget {
                             Text(
                               offer.about.toString(),
                               style: TextStyle(
+                                fontFamily: "Itim",
                                 fontSize: 12,
                                 color: Colors.black54,
                               ),
@@ -182,6 +187,7 @@ class ScreenOfferDetails extends StatelessWidget {
                               "Reward",
                               style: TextStyle(
                                 fontSize: 16,
+                                fontFamily: "Itim",
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -204,6 +210,7 @@ class ScreenOfferDetails extends StatelessWidget {
                             "$steps",
                             style: TextStyle(
                               fontSize: 12,
+                              fontFamily: "Itim",
                               color: Colors.black54,
                               fontWeight: FontWeight.bold,
                             ),
@@ -223,6 +230,7 @@ class ScreenOfferDetails extends StatelessWidget {
                                 'Maximum it can take upto 24 hours to add your reward in $appName wallet',
                                 style: TextStyle(
                                   color: Colors.red,
+                                  fontFamily: "Itim",
                                   fontSize: 9,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -245,6 +253,7 @@ class ScreenOfferDetails extends StatelessWidget {
                                 'You will not get any reward if you have already completed this offer',
                                 style: TextStyle(
                                     color: Colors.red,
+                                    fontFamily: "Itim",
                                     fontSize: 9,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -263,6 +272,7 @@ class ScreenOfferDetails extends StatelessWidget {
                                 'Fake Register/Install may lead to your account deactivation',
                                 style: TextStyle(
                                     color: Colors.red,
+                                    fontFamily: "Itim",
                                     fontSize: 9,
                                     fontWeight: FontWeight.bold),
                               ),

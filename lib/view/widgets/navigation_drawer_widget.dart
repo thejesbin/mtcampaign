@@ -28,51 +28,69 @@ class NavigationDrawerWidget extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                appName,
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
-                height: 0.2,
+                height: 250,
                 width: double.infinity,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InkWell(
-                onTap: () => Get.to(() => ScreenProfile()),
-                child: const CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage("assets/profile.png"),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15)),
                 ),
-              ),
-              Obx(
-                () => Center(
-                  child: Text(
-                    "Hi ${user.userList[0].user![0].name}",
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      color: Colors.grey,
+                child: Column(children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    appName,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontFamily: "Itim",
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 0.2,
+                    width: double.infinity,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () => Get.to(() => ScreenProfile()),
+                    child: const CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage("assets/profile.png"),
+                    ),
+                  ),
+                  Obx(
+                    () => Center(
+                      child: Text(
+                        "Hi ${user.userList[0].user![0].name}",
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontFamily: "Itim",
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ]),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 10,
               ),
               Row(
                 children: const [
@@ -81,7 +99,11 @@ class NavigationDrawerWidget extends StatelessWidget {
                   ),
                   Text(
                     "REFER & EARN",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontFamily: "Itim",
+                    ),
                   )
                 ],
               ),
@@ -115,7 +137,11 @@ class NavigationDrawerWidget extends StatelessWidget {
                   ),
                   Text(
                     "WITHDRAW & TRANSACTION",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontFamily: "Itim",
+                    ),
                   )
                 ],
               ),
@@ -160,7 +186,11 @@ class NavigationDrawerWidget extends StatelessWidget {
                   ),
                   Text(
                     "CHAT & SUPPORT",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontFamily: "Itim",
+                    ),
                   )
                 ],
               ),

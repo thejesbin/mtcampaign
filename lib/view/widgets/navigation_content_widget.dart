@@ -24,6 +24,7 @@ class NavigationContentWidget extends StatelessWidget {
           title,
           style: const TextStyle(
             fontSize: 16,
+            fontFamily: "Itim",
             color: Colors.black54,
           ),
         )

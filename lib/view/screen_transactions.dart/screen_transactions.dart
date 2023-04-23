@@ -97,7 +97,7 @@ class ScreenTransactions extends StatelessWidget {
                                             elevation: 5,
                                             child: Container(
                                               height: 60,
-                                              width: mwidth * 0.9,
+                                              width: mwidth * 95,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
@@ -109,15 +109,40 @@ class ScreenTransactions extends StatelessWidget {
                                               child: Row(
                                                 children: [
                                                   const SizedBox(
-                                                    width: 10,
+                                                    width: 5,
+                                                  ),
+                                                  CircleAvatar(
+                                                    backgroundColor:
+                                                        transaction.type ==
+                                                                "credit"
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                    child: transaction.type ==
+                                                            "credit"
+                                                        ? Icon(
+                                                            Icons
+                                                                .call_received_outlined,
+                                                            color: Colors.white,
+                                                          )
+                                                        : Icon(
+                                                            Icons
+                                                                .call_made_outlined,
+                                                            color: Colors.white,
+                                                          ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
                                                   ),
                                                   Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       SizedBox(
-                                                          width: mwidth * 0.7,
+                                                          width: mwidth * 0.5,
                                                           child: Text(
                                                             transaction.comment
                                                                 .toString(),
@@ -179,11 +204,10 @@ class ScreenTransactions extends StatelessWidget {
                                                       )
                                                     ],
                                                   ),
-                                                  const Spacer(),
                                                   Text(
                                                     "₹${transaction.amount}",
                                                     style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 12,
                                                       color: transaction.type ==
                                                               "credit"
                                                           ? Colors.green
@@ -192,9 +216,6 @@ class ScreenTransactions extends StatelessWidget {
                                                           FontWeight.w500,
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  )
                                                 ],
                                               ),
                                             ),

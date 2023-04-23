@@ -19,6 +19,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../controller/banner_ad_controller.dart';
 import '../../controller/camp_history_controller.dart';
+import '../widgets/home_card_widget.dart';
 import '../widgets/shimmer_loading_widget.dart';
 
 class ScreenMain extends StatefulWidget {
@@ -51,7 +52,12 @@ class _ScreenMainState extends State<ScreenMain> {
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(appName),
+        title: const Text(
+          appName,
+          style: TextStyle(
+            fontFamily: "Itim",
+          ),
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 5,
@@ -74,9 +80,87 @@ class _ScreenMainState extends State<ScreenMain> {
                           "₹${users.userList[0].user![0].balance}",
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w500),
+                              fontFamily: "Itim",
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
                         ),
                       ))),
+          ),
+          InkWell(
+            onTap: () => showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Obx(() => users.isLoading.isTrue
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : users.isEmpty.isTrue
+                              ? SizedBox(
+                                  height: 1,
+                                )
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    HomeCardWidget(
+                                      amount:
+                                          "${users.userList[0].user![0].balance}",
+                                      title: "Total Balance",
+                                      icon: Icons.account_balance_outlined,
+                                      color: Colors.orange,
+                                    ),
+                                    HomeCardWidget(
+                                      amount:
+                                          "${double.parse(users.userList[0].totalEarnings.toString()).toInt()}",
+                                      title: "Total Earnings",
+                                      icon: Icons.file_open_outlined,
+                                      color: Colors.green,
+                                    ),
+                                  ],
+                                )),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          HomeCardWidget(
+                            amount:
+                                "${double.parse(users.userList[0].totalReferEarnings.toString()).toInt()}",
+                            title: "Total Refer Earnings",
+                            icon: Icons.check_circle,
+                            color: Colors.red,
+                          ),
+                          HomeCardWidget(
+                            amount:
+                                "${double.parse(users.userList[0].totalWithdrawal.toString()).toInt()}",
+                            title: "Total Withdrawal",
+                            icon: Icons.handshake_outlined,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                }),
+            child:const CircleAvatar(
+                radius: 10,
+                child: Icon(
+                  Icons.add,
+                  size: 15,
+                )),
+          ),
+          SizedBox(
+            width: 10,
           )
         ],
       ),

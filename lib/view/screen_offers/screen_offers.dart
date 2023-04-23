@@ -130,6 +130,7 @@ class ScreenOffers extends StatelessWidget {
                 history.title.toString(),
                 style: const TextStyle(
                   fontSize: 14,
+                  fontFamily: "Itim",
                   overflow: TextOverflow.ellipsis,
                   fontWeight: FontWeight.bold,
                 ),
@@ -151,6 +152,7 @@ class ScreenOffers extends StatelessWidget {
                   history.status.toString(),
                   style: const TextStyle(
                       fontSize: 10,
+                      fontFamily: "Itim",
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                 ),
@@ -224,6 +226,7 @@ class ScreenOffers extends StatelessWidget {
                                 "${offer.name}",
                                 style: const TextStyle(
                                   fontSize: 14,
+                                  fontFamily: "Itim",
                                   overflow: TextOverflow.ellipsis,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -246,6 +249,7 @@ class ScreenOffers extends StatelessWidget {
                           "Try the app to get reward",
                           style: TextStyle(
                             fontSize: 12,
+                            fontFamily: "Itim",
                             overflow: TextOverflow.ellipsis,
                             color: Colors.black,
                           ),
@@ -260,6 +264,7 @@ class ScreenOffers extends StatelessWidget {
                           "₹${offer.amount}",
                           style: const TextStyle(
                             fontSize: 15,
+                            fontFamily: "Itim",
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
                           ),
@@ -278,6 +283,7 @@ class ScreenOffers extends StatelessWidget {
                             "Try Now",
                             style: TextStyle(
                               color: Colors.white,
+                              fontFamily: "Itim",
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
