@@ -31,6 +31,7 @@ class ScreenOffers extends StatelessWidget {
         body: RefreshIndicator(
           onRefresh: () async {
             offers.getData();
+            history.getData();
           },
           child: SingleChildScrollView(
             child: SafeArea(

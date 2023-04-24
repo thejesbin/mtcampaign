@@ -55,7 +55,10 @@ class ScreenRefer extends StatelessWidget {
                           ),
                           const Text(
                             "Share your code and invite your friends",
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Itim",
+                            ),
                           )
                         ],
                       ),
@@ -99,9 +102,12 @@ class ScreenRefer extends StatelessWidget {
                           const SizedBox(
                             width: 7,
                           ),
-                          const Text(
-                            "Your friend register on $appName",
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                          Text(
+                            "When your friend completes ${settings.settingsList[0].refferOffers} offers",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Itim",
+                            ),
                           )
                         ],
                       ),
@@ -122,6 +128,7 @@ class ScreenRefer extends StatelessWidget {
                               "You Get ₹${settings.settingsList[0].perRefer}",
                               style: const TextStyle(
                                 fontSize: 12,
+                                fontFamily: "Itim",
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -133,6 +140,7 @@ class ScreenRefer extends StatelessWidget {
                             "+",
                             style: TextStyle(
                               fontSize: 35,
+                              fontFamily: "Itim",
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -149,6 +157,7 @@ class ScreenRefer extends StatelessWidget {
                             child: Text(
                               "Additional ${settings.settingsList[0].earningPercentage}% of\n your friends earnings",
                               style: const TextStyle(
+                                fontFamily: "Itim",
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -170,7 +179,10 @@ class ScreenRefer extends StatelessWidget {
                       ),
                       const Text(
                         "Share your referral code",
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Itim",
+                        ),
                       ),
                       const SizedBox(
                         height: 30,
@@ -191,6 +203,7 @@ class ScreenRefer extends StatelessWidget {
                               "${user.userList[0].user![0].referCode}",
                               style: const TextStyle(
                                 color: Colors.blue,
+                                fontFamily: "Itim",
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -226,6 +239,7 @@ class ScreenRefer extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 9,
+                          fontFamily: "Itim",
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -262,6 +276,7 @@ class ScreenRefer extends StatelessWidget {
                           "Total Referrals: ${user.userList[0].totalReferrals}",
                           style: const TextStyle(
                             color: Colors.black,
+                            fontFamily: "Itim",
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),

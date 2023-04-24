@@ -9,7 +9,7 @@ import 'package:mtcampaign/view/widgets/input_widget.dart';
 
 class ScreenSignup extends StatelessWidget {
   String? referCode;
-  ScreenSignup({super.key,this.referCode});
+  ScreenSignup({super.key, this.referCode});
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -19,9 +19,9 @@ class ScreenSignup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mwidth = MediaQuery.of(context).size.width;
-if(referCode!=null){
-  referController.text=referCode!;
-}
+    if (referCode != null) {
+      referController.text = referCode!;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -43,6 +43,7 @@ if(referCode!=null){
                     "Sign Up",
                     style: TextStyle(
                       fontSize: 28,
+                      fontFamily: "Itim",
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,
                     ),
@@ -121,6 +122,7 @@ if(referCode!=null){
                                 "Continue",
                                 style: TextStyle(
                                   color: Colors.white,
+                                  fontFamily: "Itim",
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17,
                                 ),
@@ -136,6 +138,7 @@ if(referCode!=null){
                     style: TextStyle(
                       color: Colors.grey.shade500,
                       letterSpacing: 1,
+                      fontFamily: "Itim",
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -146,6 +149,7 @@ if(referCode!=null){
                       "Login",
                       style: TextStyle(
                         letterSpacing: 1,
+                        fontFamily: "Itim",
                         fontWeight: FontWeight.bold,
                       ),
                     ),

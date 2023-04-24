@@ -39,7 +39,10 @@ class ScreenWallet extends StatelessWidget {
                     ),
                     Text(
                       "Withdrawal",
-                      style: TextStyle(fontSize: 22),
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: "Itim",
+                      ),
                     )
                   ],
                 ),
@@ -56,6 +59,7 @@ class ScreenWallet extends StatelessWidget {
                   child: Text(
                     "Minimum Withdrawal Amount is ₹${settings.settingsList[0].minWithdrawal}",
                     style: const TextStyle(
+                      fontFamily: "Itim",
                       color: Colors.purple,
                     ),
                   ),
@@ -70,8 +74,11 @@ class ScreenWallet extends StatelessWidget {
                     ),
                     Text(
                       "Amount",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Itim",
+                      ),
                     )
                   ],
                 ),
@@ -94,6 +101,7 @@ class ScreenWallet extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: "Itim",
                                 color: Colors.black.withOpacity(0.8)),
                           ),
                           const SizedBox(
@@ -106,6 +114,7 @@ class ScreenWallet extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Itim",
                             ),
                             decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -128,6 +137,7 @@ class ScreenWallet extends StatelessWidget {
                 const Text(
                   "Note: Payment will be send on\n registered paytm number",
                   style: TextStyle(
+                    fontFamily: "Itim",
                     color: Color.fromARGB(255, 245, 23, 7),
                     fontSize: 15,
                   ),
@@ -155,12 +165,13 @@ class ScreenWallet extends StatelessWidget {
                         return ButtonWidget(
                           widget: val == 1
                               ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
+                                  color: Colors.white,
+                                )
                               : const Text(
                                   "Submit",
                                   style: TextStyle(
                                     color: Colors.white,
+                                    fontFamily: "Itim",
                                     fontWeight: FontWeight.bold,
                                     fontSize: 17,
                                   ),
@@ -179,7 +190,13 @@ class ScreenWallet extends StatelessWidget {
                         )
                       : withdrawHistory.isEmpty.isTrue ||
                               settings.isEmpty.isTrue
-                          ? const Center(child: Text("No Withdrawals"))
+                          ? const Center(
+                              child: Text(
+                              "No Withdrawals",
+                              style: TextStyle(
+                                fontFamily: "Itim",
+                              ),
+                            ))
                           : ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -192,7 +209,6 @@ class ScreenWallet extends StatelessWidget {
                                     height: 70,
                                     width: mwidth * 0.9,
                                     alignment: Alignment.center,
-                                    
                                     child: Row(
                                       children: [
                                         const SizedBox(
@@ -218,6 +234,7 @@ class ScreenWallet extends StatelessWidget {
                                               "Via Paytm",
                                               style: TextStyle(
                                                 fontSize: 13,
+                                                fontFamily: "Itim",
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -228,6 +245,7 @@ class ScreenWallet extends StatelessWidget {
                                               "${withdraw.date}\n ${withdraw.time}",
                                               style: const TextStyle(
                                                   fontSize: 10,
+                                                  fontFamily: "Itim",
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.grey),
                                             ),
@@ -238,6 +256,7 @@ class ScreenWallet extends StatelessWidget {
                                           "₹${withdraw.amount}",
                                           style: const TextStyle(
                                             fontSize: 17,
+                                            fontFamily: "Itim",
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -262,7 +281,8 @@ class ScreenWallet extends StatelessWidget {
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize:10,
+                                                fontSize: 10,
+                                                fontFamily: "Itim",
                                               ),
                                             )),
                                         const SizedBox(
@@ -274,7 +294,7 @@ class ScreenWallet extends StatelessWidget {
                                 );
                               },
                               separatorBuilder: (context, i) {
-                                return Divider(thickness:2);
+                                return Divider(thickness: 2);
                               },
                               itemCount:
                                   withdrawHistory.withdrawHistoryList.length),

@@ -12,6 +12,8 @@ const withdrawHistoryUrl ="https://mtcampaign.co.in/api/withdraw_history.php";
 const settingsUrl ="https://mtcampaign.co.in/api/settings.php";
 const campHistoryUrl ="https://mtcampaign.co.in/api/camp_history.php";
 const offerHistoryUrl ="https://mtcampaign.co.in/api/offer_history.php";
+const startOfferUrl ="https://mtcampaign.co.in/api/start_offer.php";
+
 
 
 const myReferralsUrl="https://mtcampaign.co.in/api/my_referrals.php";

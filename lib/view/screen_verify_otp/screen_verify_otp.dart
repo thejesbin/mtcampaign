@@ -49,6 +49,7 @@ class ScreenVerifyOtp extends StatelessWidget {
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1,
+                    fontFamily: "Itim",
                   ),
                 ),
               ],
@@ -62,6 +63,7 @@ class ScreenVerifyOtp extends StatelessWidget {
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
+                fontFamily: "Itim",
               ),
             ),
             const SizedBox(
@@ -100,6 +102,7 @@ class ScreenVerifyOtp extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
+                                fontFamily: "Itim",
                               ),
                             ),
                     );
@@ -114,6 +117,7 @@ class ScreenVerifyOtp extends StatelessWidget {
                     color: Colors.grey.shade500,
                     letterSpacing: 1,
                     fontWeight: FontWeight.w500,
+                    fontFamily: "Itim",
                   ),
                 ),
                 TextButton(
@@ -160,6 +164,7 @@ class ScreenVerifyOtp extends StatelessWidget {
                     style: TextStyle(
                       letterSpacing: 1,
                       fontWeight: FontWeight.bold,
+                      fontFamily: "Itim",
                     ),
                   ),
                 )
@@ -180,9 +185,8 @@ class ScreenVerifyOtp extends StatelessWidget {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-    }
-    else{
-       buttonStatus.value = 1;
+    } else {
+      buttonStatus.value = 1;
       d.Dio dio = d.Dio();
       var formData = d.FormData.fromMap({
         'name': name,
@@ -190,7 +194,7 @@ class ScreenVerifyOtp extends StatelessWidget {
         'phone': phone,
         'refer': refer,
         'password': password,
-        'otp':otp
+        'otp': otp
       });
       var response = await dio.post(verifyOtpUrl, data: formData);
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -202,7 +206,7 @@ class ScreenVerifyOtp extends StatelessWidget {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
-          Get.offAll(()=>ScreenLogin());
+          Get.offAll(() => ScreenLogin());
         } else {
           Get.snackbar(
             "Oh no!",

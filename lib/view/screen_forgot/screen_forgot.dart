@@ -38,6 +38,7 @@ class ScreenForgot extends StatelessWidget {
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,
+                      fontFamily: "Itim",
                     ),
                   ),
                 ],
@@ -77,6 +78,7 @@ class ScreenForgot extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17,
+                                  fontFamily: "Itim",
                                 ),
                               ),
                       );

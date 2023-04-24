@@ -91,47 +91,57 @@ class ScreenReferrals extends StatelessWidget {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.9,
-                            child: ListView.builder(
+                            child: ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, i) {
                                 return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Container(
-                                      height: 30,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.black),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Container(
+                                    height: 60,
+                                    width: double.infinity,
+                                    // decoration: BoxDecoration(
+                                    //   borderRadius: BorderRadius.circular(10),
+                                    //   border: Border.all(color: Colors.black),
+                                    // ),
+                                    child: Row(children: [
+                                      const SizedBox(
+                                        width: 5,
                                       ),
-                                      child: Row(children: [
-                                        const SizedBox(
-                                          width: 5,
+                                      CircleAvatar(
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage:
+                                            AssetImage("assets/profile.png"),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        referrals.myReferralsList[i].name
+                                            .toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontFamily: "Itim",
                                         ),
-                                        Text("${i + 1}"),
-                                        const SizedBox(
-                                          width: 10,
+                                      ),
+                                      const Spacer(),
+                                      Text(
+                                        referrals.myReferralsList[i].date
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontFamily: "Itim",
                                         ),
-                                        Text(
-                                          referrals.myReferralsList[i].name
-                                              .toString(),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        const Spacer(),
-                                        Text(referrals.myReferralsList[i].date
-                                            .toString()),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                      ]),
-                                    ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                    ]),
                                   ),
                                 );
                               },
+                              separatorBuilder: (context, i) => Divider(
+                                thickness: 1,
+                              ),
                               itemCount: referrals.myReferralsList.length,
                             ),
                           )

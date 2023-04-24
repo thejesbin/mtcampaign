@@ -23,6 +23,9 @@ class InputWidget extends StatelessWidget {
       height: 60,
       width: mwidth * 0.9,
       alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: Color.fromARGB(255, 248, 248, 248),
+          borderRadius: BorderRadius.circular(20)),
       child: Row(
         children: [
           const SizedBox(
@@ -33,23 +36,17 @@ class InputWidget extends StatelessWidget {
             width: 10,
           ),
           Expanded(
-              child: Column(
-            children: [
-              TextField(
-                obscureText: obscure,
-                keyboardType: inputType,
-                controller: controller,
-                decoration: InputDecoration(
-                  hintText: hint,
-                  border: InputBorder.none,
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.black,
-              )
-            ],
+              child: TextField(
+            obscureText: obscure,
+            keyboardType: inputType,
+            controller: controller,
+            style: TextStyle(
+              fontFamily: "Itim",
+            ),
+            decoration: InputDecoration(
+              hintText: hint,
+              border: InputBorder.none,
+            ),
           ))
         ],
       ),

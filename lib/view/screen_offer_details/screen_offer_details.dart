@@ -1,4 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:dio/dio.dart' as d;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -211,8 +215,6 @@ class ScreenOfferDetails extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12,
                               fontFamily: "Itim",
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -296,9 +298,80 @@ class ScreenOfferDetails extends StatelessWidget {
               SharedPreferences sharedPreferences =
                   await SharedPreferences.getInstance();
               var uid = sharedPreferences.getString('uid');
-              var url = Uri.parse(
-                  "${offer.url}&aff_click_id=$uid&sub_aff_id=${offer.id}");
-              await launchUrl(url, mode: LaunchMode.externalApplication);
+              // var url = Uri.parse(
+              //     "${offer.url}&aff_click_id=$uid&sub_aff_id=${offer.id}");
+              // await launchUrl(url, mode: LaunchMode.externalApplication);
+
+              //verify offer
+
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: Colors.transparent,
+                      content: Container(
+                        height: 200,
+                        width: 250,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Redirecting to offer...",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Itim",
+                                ),
+                              ),
+                            ]),
+                      ),
+                    );
+                  });
+
+              d.Dio dio = d.Dio();
+              var formData =
+                  d.FormData.fromMap({'uid': uid, 'oid': offer.offerid});
+              var response = await dio.post(startOfferUrl, data: formData);
+              if (response.statusCode == 200 || response.statusCode == 201) {
+                if (response.data['status'] == true) {
+                  Get.snackbar(
+                    "Woo hoo",
+                    response.data['msg'],
+                    backgroundColor: Colors.green,
+                    colorText: Colors.white,
+                  );
+
+                  Navigator.of(context).pop();
+                  var url = Uri.parse(
+                      "${offer.url}&aff_click_id=$uid&sub_aff_id=${offer.id}");
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                } else {
+                  Get.snackbar(
+                    "Oh no!",
+                    response.data['msg'],
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                  );
+                }
+              } else {
+                Get.snackbar(
+                  "Oh no!",
+                  "Error occured try again!",
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                );
+              }
             },
             child: Container(
               height: 50,

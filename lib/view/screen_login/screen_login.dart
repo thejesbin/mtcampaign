@@ -20,7 +20,7 @@ class ScreenLogin extends StatefulWidget {
 }
 
 class _ScreenLoginState extends State<ScreenLogin> {
-   @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -77,6 +77,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,
+                      fontFamily: "Itim",
                     ),
                   ),
                 ],
@@ -92,7 +93,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 inputType: TextInputType.phone,
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               InputWidget(
                 obscure: true,
@@ -108,11 +109,12 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () =>Get.to(()=>ScreenForgot()),
+                    onPressed: () => Get.to(() => ScreenForgot()),
                     child: const Text(
                       "Forgot Password?",
                       style: TextStyle(
                         letterSpacing: 1,
+                        fontFamily: "Itim",
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -136,6 +138,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                 "Continue",
                                 style: TextStyle(
                                   color: Colors.white,
+                                  fontFamily: "Itim",
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17,
                                 ),
@@ -155,6 +158,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       color: Colors.grey.shade500,
                       letterSpacing: 1,
                       fontWeight: FontWeight.w500,
+                      fontFamily: "Itim",
                     ),
                   ),
                   TextButton(
@@ -165,6 +169,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       "Register",
                       style: TextStyle(
                         letterSpacing: 1,
+                        fontFamily: "Itim",
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -211,10 +216,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
-          SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
           sharedPreferences.setString('uid', response.data['uid']);
           print(sharedPreferences.getString('uid'));
-          Get.offAll(()=>ScreenSplash());
+          Get.offAll(() => ScreenSplash());
         } else {
           Get.snackbar(
             "Oh no!",
