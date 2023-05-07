@@ -19,6 +19,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../controller/banner_ad_controller.dart';
 import '../../controller/camp_history_controller.dart';
+import '../../controller/onesignal_controller.dart';
 import '../widgets/home_card_widget.dart';
 import '../widgets/shimmer_loading_widget.dart';
 
@@ -41,7 +42,7 @@ class _ScreenMainState extends State<ScreenMain> {
     Get.put(MyReferralsController());
     Get.put(TransactionsController());
     Get.put(CampHistoryController());
-
+    Get.put(OneSignalController());
     var pages = [
       ScreenHome(),
       ScreenOffers(),
@@ -152,7 +153,7 @@ class _ScreenMainState extends State<ScreenMain> {
                     ],
                   );
                 }),
-            child:const CircleAvatar(
+            child: const CircleAvatar(
                 radius: 10,
                 child: Icon(
                   Icons.add,

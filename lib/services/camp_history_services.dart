@@ -16,7 +16,6 @@ class CampHistoryServices {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print(response.data['result']);
       if (response.data['result'] == null) {
         return null;
       } else {

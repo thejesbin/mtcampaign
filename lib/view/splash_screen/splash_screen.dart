@@ -33,8 +33,6 @@ class _ScreenSplashState extends State<ScreenSplash> {
     super.initState();
 
     Timer(const Duration(milliseconds: 1), () async {
-      OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-      await OneSignal.shared.setAppId(onesignalAppId);
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       var uid = sharedPreferences.getString('uid');

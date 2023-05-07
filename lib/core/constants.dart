@@ -20,6 +20,8 @@ const myReferralsUrl="https://mtcampaign.co.in/api/my_referrals.php";
 const withdrawUrl="https://mtcampaign.co.in/api/withdraw.php";
 const forgotUrl="https://mtcampaign.co.in/api/forgot.php";
 const transactionsUrl="https://mtcampaign.co.in/api/transactions.php";
+const notificationsUrl="https://mtcampaign.co.in/api/notifications.php";
+
 
 
 
